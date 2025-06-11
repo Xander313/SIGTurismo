@@ -219,6 +219,16 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <script src="{{ asset('js/main.js') }}"></script>
 
 
+  <style>
+    .error {
+      color: red;
+      font-family: 'Montserrat';
+    }
+    
+    .form-control.error {
+      border: 1px solid red;
+    }
+  </style>
 
   @if (session('success'))
   <script>
