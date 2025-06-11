@@ -21,7 +21,7 @@ class SitioController extends Controller
 
     public function create()
     {
-        return view('sitios.nuevo');
+        return view('sitios.nuevositio');
     }
 
     public function store(Request $request)
@@ -49,7 +49,7 @@ class SitioController extends Controller
     public function edit(string $id)
     {
         $sitio = Sitio::findOrFail($id);
-        return view('sitios.editar', compact('sitio'));
+        return view('sitios.editarsitio', compact('sitio'));
     }
 
     public function update(Request $request, string $id)

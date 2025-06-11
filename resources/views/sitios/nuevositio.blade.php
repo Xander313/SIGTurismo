@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('contenido')
+@section('content')
 <div class="d-flex justify-content-center align-items-center flex-column">
     <h1 class="mb-4">Registrar Nuevo Sitio</h1>
 
