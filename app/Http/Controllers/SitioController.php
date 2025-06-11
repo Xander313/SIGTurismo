@@ -3,67 +3,82 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-
 use App\Models\Sitio;
 
 class SitioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
-        return view('Sitios.index');
-
+        $sitios = Sitio::all();
+        return view('sitios.index', compact('sitios'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function mapa()
+    {
+        $sitios = Sitio::all();
+        return view('sitios.mapa', compact('sitios'));
+    }
+
     public function create()
     {
-        //
+        return view('sitios.nuevo');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $datos = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
+            'categoria' => 'required|string|max:255',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'latitud' => 'required|numeric',
+            'longitud' => 'required|numeric',
+        ]);
+
+        // Subir imagen
+        if ($request->hasFile('imagen')) {
+            $nombreArchivo = time() . '_' . $request->file('imagen')->getClientOriginalName();
+            $request->file('imagen')->move(resource_path('img/'), $nombreArchivo);
+            $datos['imagen'] = 'resources/img/' . $nombreArchivo;
+        }
+
+        Sitio::create($datos);
+        return redirect()->route('sitios.index')->with('message', 'Sitio creado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        $sitio = Sitio::findOrFail($id);
+        return view('sitios.editar', compact('sitio'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $sitio = Sitio::findOrFail($id);
+        
+        $datos = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
+            'categoria' => 'required|string|max:255',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'latitud' => 'required|numeric',
+            'longitud' => 'required|numeric',
+        ]);
+
+        // Subir nueva imagen
+        if ($request->hasFile('imagen')) {
+            $nombreArchivo = time() . '_' . $request->file('imagen')->getClientOriginalName();
+            $request->file('imagen')->move(resource_path('img/'), $nombreArchivo);
+            $datos['imagen'] = 'resources/img/' . $nombreArchivo;
+        }
+
+        $sitio->update($datos);
+        return redirect()->route('sitios.index')->with('message', 'Sitio actualizado correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        Sitio::findOrFail($id)->delete();
+        return redirect()->route('sitios.index')->with('message', 'Sitio eliminado correctamente.');
     }
 }
