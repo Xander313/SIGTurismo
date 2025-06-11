@@ -16,58 +16,53 @@
             <textarea name="descripcion" id="descripcion" class="form-control"></textarea> <br>
 
             <label><b>Categoría:</b></label>
-            <input type="text" name="categoria" id="categoria"  class="form-control" required> <br>
+            <input type="text" name="categoria" id="categoria" class="form-control" required> <br>
 
             <label><b>Imagen:</b></label>
             <input type="file" name="imagen" id="imagen" class="form-control"> <br>
 
-      <div class="" id="mapa_cliente" style="border:1px solid black; height:250px;
-            width:100%"> </div>
-            <button type="submit" class="btn btn-success">Guardar</button>
+            <label><b>Latitud:</b></label>
+            <input readonly type="text" name="latitud" id="latitud" class="form-control"> <br>
+
+            <label><b>Longitud:</b></label>
+            <input readonly type="text" name="longitud" id="longitud" class="form-control"> <br>
+
+            <div id="mapa_cliente" class="mt-3" style="border:1px solid black; height:250px;"></div>
+
+            <br>
+            <div class="text-center">
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </div>
         </form>
     </div>
 </div>
 
-
-
-
-
-
 <script type="text/javascript">
+    function initMap() {
+        var latitud = -0.9374805;
+        var longitud = -78.6161327;
 
-      function initMap(){
-        alert("MAPA CARGADA")
-        var latitud_longitud= new google.maps.LatLng(-0.9374805,-78.6161327);
-        var mapa=new google.maps.Map(
-          document.getElementById('mapa_cliente'),
-          {
-            center:latitud_longitud,
-            zoom:15,
-            mapTypeId:google.maps.MapTypeId.ROADMAP
-          }
-        );
-        var marcador=new google.maps.Marker({
-          position:latitud_longitud,
-          map:mapa,
-          title:"Seleccione la direccion",
-          draggable:true
+        var latitud_longitud = new google.maps.LatLng(latitud, longitud);
+        var mapa = new google.maps.Map(document.getElementById('mapa_cliente'), {
+            center: latitud_longitud,
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-        google.maps.event.addListener(
-          marcador,
-          'dragend',
-          function(event){
-            var latitud=this.getPosition().lat();
-            var longitud=this.getPosition().lng();
 
-            document.getElementById("latitud").value=latitud;
-            document.getElementById("longitud").value=longitud;
-          }
-        );
-      }
+        var marcador = new google.maps.Marker({
+            position: latitud_longitud,
+            map: mapa,
+            title: "Seleccione la dirección",
+            draggable: true
+        });
+
+        google.maps.event.addListener(marcador, 'dragend', function(event) {
+            document.getElementById("latitud").value = this.getPosition().lat();
+            document.getElementById("longitud").value = this.getPosition().lng();
+        });
+    }
     window.onload = initMap;
-
-
-    </script>
+</script>
 
 <script>
     $("#imagen").fileinput({
@@ -81,28 +76,21 @@
 
 
 <script>
-    
     $("#FormRegistro").validate({
         rules: {
             nombre: {
                 required: true,
-                min: 2,
-                max: 100
+                minlength: 2,
+                maxlength: 100
             },
             descripcion: {
                 required: true,
-                min: 10,
-                max: 1000
+                minlength: 10,
+                maxlength: 1000
             },
             categoria: {
                 required: true
             },
-            //observaciones: {
-            //    required: true,
-            //    min: 10,
-            //    max: 100
-//
-            //},
             imagen: {
                 required: true,
                 extension: "jpg|jpeg|png|gif"
@@ -111,26 +99,20 @@
         messages: {
             nombre: {
                 required: "El nombre del sitio turístico es requerido",
-                min: "El nombre del sitio turístico no puede tener nemos de 2 letras",
-                max: "El nombre del sitio turístico no puede tenre más de 100 letras"
+                minlength: "El nombre del sitio turístico no puede tener menos de 2 letras",
+                maxlength: "El nombre del sitio turístico no puede tener más de 100 letras"
             },
             descripcion: {
-                required: "La descripción del sitio turístico es requerido",
-                min: "La descripción del sitio turístico no puede tener menos de 10 letra",
-                max: "La descripción del sitio turístico no puede tener más de 1000 letras"
+                required: "La descripción del sitio turístico es requerida",
+                minlength: "La descripción del sitio turístico no puede tener menos de 10 letras",
+                maxlength: "La descripción del sitio turístico no puede tener más de 1000 letras"
             },
             categoria: {
-                required: "La categoria del sitio turístico es requerido"
-
+                required: "La categoría del sitio turístico es requerida"
             },
-            //observaciones: {
-            //    required: "La observación del sitio turístico es requerido",
-            //    min: "La observación del sitio turístico no puede tener menos de 10 letras",
-            //    max: "La observación del sitio turístico no puede tener más de 1000 letras."
-            //},
             imagen: {
-                required: "Debe subir la imagen del sitio turísticos",
-                extension: "Solo se permiten imágenes: jpg, jpeg, png, gif"
+                required: "Debe subir una imagen del sitio turístico",
+                extension: "Solo se permiten imágenes en formato jpg, jpeg, png, gif"
             }
         },
         submitHandler: function(form) {

@@ -56,7 +56,7 @@
                             </a>
 
                             <!-- Botón Eliminar (Icono de basurero) -->
-                            <form action="{{ route('Sitios.destroy', $sitio->id) }}" method="POST" style="display:inline;" class="form-eliminar">
+                            <form action="{{ route('sitios.destroy', $sitio->id) }}" method="POST" style="display:inline;" class="form-eliminar">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-outline-danger btn-sm btn-eliminar">
