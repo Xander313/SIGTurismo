@@ -30,6 +30,45 @@
 
 
 
+
+
+
+<script type="text/javascript">
+
+      function initMap(){
+        alert("MAPA CARGADA")
+        var latitud_longitud= new google.maps.LatLng(-0.9374805,-78.6161327);
+        var mapa=new google.maps.Map(
+          document.getElementById('mapa_cliente'),
+          {
+            center:latitud_longitud,
+            zoom:15,
+            mapTypeId:google.maps.MapTypeId.ROADMAP
+          }
+        );
+        var marcador=new google.maps.Marker({
+          position:latitud_longitud,
+          map:mapa,
+          title:"Seleccione la direccion",
+          draggable:true
+        });
+        google.maps.event.addListener(
+          marcador,
+          'dragend',
+          function(event){
+            var latitud=this.getPosition().lat();
+            var longitud=this.getPosition().lng();
+
+            document.getElementById("latitud").value=latitud;
+            document.getElementById("longitud").value=longitud;
+          }
+        );
+      }
+    window.onload = initMap;
+
+
+    </script>
+
 <script>
     $("#imagen").fileinput({
         language: "es",
