@@ -10,7 +10,7 @@ class SitioController extends Controller
     public function index()
     {
         $sitios = Sitio::all();
-        return view('sitios.index', compact('sitios'));
+        return view('Sitios.index', compact('sitios'));
     }
 
     public function mapa()
