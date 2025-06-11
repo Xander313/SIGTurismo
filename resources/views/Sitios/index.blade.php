@@ -24,7 +24,7 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-striped table-bordered align-middle">
+        <table class="table table-striped table-bordered align-middle" id="tableSitios">
             <thead class="table-dark">
                 <tr>
                     <th>ID</th>
@@ -70,6 +70,26 @@
         </table>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function() {
+        let table = new DataTable('#tableSitios', {
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/2.3.1/i18n/es-ES.json'
+            },
+            dom: 'Bfrtip',
+            buttons: [
+                'copy',
+                'csv',
+                'excel',
+                'pdf',
+                'print'
+            ]
+        });
+    });
+
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
