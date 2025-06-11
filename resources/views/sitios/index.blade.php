@@ -1,6 +1,5 @@
 @extends('layout.app')
-
-@section('contenido')
+@section('content')
 <div class="container mt-4">
     <h1 class="mb-4">Listado de Sitios Turísticos</h1>
 
@@ -15,11 +14,11 @@
     @endif
 
     <div class="text-end mb-3">
-        <a href="{{ route('Sitios.create') }}" class="btn btn-outline-primary">
+        <a href="{{ route('sitios.create') }}" class="btn btn-outline-primary">
             <i class="fa fa-plus"></i> Nuevo Sitio
         </a>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="{{ route('Sitios.mapa') }}" class="btn btn-outline-success">
+        <a href="{{ route('sitios.mapa') }}" class="btn btn-outline-success">
             <i class="fa fa-map"></i> Ver Mapa Global
         </a>
     </div>
@@ -52,7 +51,7 @@
                         <td>{{ $sitio->longitud }}</td>
                         <td>
                             <!-- Botón Editar (Icono de lápiz) -->
-                            <a href="{{ route('Sitios.edit', $sitio->id) }}" class="btn btn-outline-warning btn-sm">
+                            <a href="{{ route('sitios.edit', $sitio->id) }}" class="btn btn-outline-warning btn-sm">
                                 <i class="fa fa-pen"></i>
                             </a>
 
