@@ -7,6 +7,15 @@
   <title>Safario Travel - Home</title>
 	<link rel="icon" href="img/Fevicon.png" type="image/png">
 
+  <!-- Font Awesome (Para iconos) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Google Maps API -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNmZyqL59rxQ0aGx_Hj3NrPF6pDY76uhk&libraries=places&callback=initMap"></script>
+
   <link rel="stylesheet" href="{{ asset('vendors/bootstrap/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('vendors/fontawesome/css/all.min.css') }}">
   <link rel="stylesheet" href="{{ asset('vendors/themify-icons/themify-icons.css') }}">
