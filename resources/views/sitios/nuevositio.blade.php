@@ -5,7 +5,7 @@
     <h1 class="mb-4">Registrar Nuevo Sitio</h1>
 
     <div class="card p-4 shadow" style="width: 50%;">
-        <form action="{{ route('Sitios.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('sitios.store') }}" method="post" enctype="multipart/form-data">
             @csrf
 
             <label><b>Nombre:</b></label>
