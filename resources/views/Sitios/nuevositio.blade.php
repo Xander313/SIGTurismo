@@ -1,6 +1,7 @@
 @extends('layout.app')
 
 @section('content')
+
 <div class="d-flex justify-content-center align-items-center flex-column">
     <h1 class="mb-4">Registrar Nuevo Sitio</h1>
 
@@ -15,13 +16,27 @@
             <textarea name="descripcion" class="form-control"></textarea> <br>
 
             <label><b>Categoría:</b></label>
-            <input type="text" name="categoria" class="form-control" required> <br>
+            <input type="text" name="categoria"  class="form-control" required> <br>
 
             <label><b>Imagen:</b></label>
-            <input type="file" name="imagen" class="form-control"> <br>
+            <input type="file" name="imagen" id="imagen" class="form-control"> <br>
 
             <button type="submit" class="btn btn-success">Guardar</button>
         </form>
     </div>
 </div>
+
+
+
+<script>
+    $("#imagen").fileinput({
+        language: "es",
+        allowedFileExtensions: ["png", "jpg", "jpeg"],
+        showCaption: false,
+        dropZoneEnabled: true,
+        showClose: false
+    });
+    
+
+</script>
 @endsection

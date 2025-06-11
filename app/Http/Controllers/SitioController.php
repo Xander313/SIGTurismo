@@ -21,7 +21,7 @@ class SitioController extends Controller
 
     public function create()
     {
-        return view('sitios.nuevositio');
+        return view('Sitios.nuevositio');
     }
 
     public function store(Request $request)
