@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('sitios', function (Blueprint $table) {
             $table->id();
+            $table->string("nombre");
+            $table->text("descripcion")->nullable();
+            $table->string("categoria");
+            $table->string("imagen")->nullable(); // Guardar ruta en resources/img/
+            $table->decimal("latitud", 10, 7);
+            $table->decimal("longitud", 10, 7);
             $table->timestamps();
         });
     }
