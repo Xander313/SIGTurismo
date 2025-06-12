@@ -43,6 +43,13 @@ class SitioController extends Controller
         return view('Sitios.maparapido', compact('sitios'));
     }
 
+    public function nuevorapido(Request $request)
+    {
+        $lat = $request->query('lat', '');
+        $lng = $request->query('lng', '');
+        return view('Sitios.nuevorapido', compact('lat', 'lng'));
+    }
+
     public function galeria()
     {
         $sitios = Sitio::whereNotNull('imagen')->take(10)->get();
