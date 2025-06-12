@@ -50,13 +50,13 @@ class SitioController extends Controller
     public function edit(string $id)
     {
         $sitio = Sitio::findOrFail($id);
-        return view('sitios.editarsitio', compact('sitio'));
+        return view('Sitios.editarsitio', compact('sitio'));
     }
 
     public function update(Request $request, string $id)
     {
         $sitio = Sitio::findOrFail($id);
-        
+
         $datos = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string',
@@ -66,11 +66,15 @@ class SitioController extends Controller
             'longitud' => 'required|numeric',
         ]);
 
-        // Subir nueva imagen
+        // Si se sube una nueva imagen, eliminar la anterior y guardar la nueva
         if ($request->hasFile('imagen')) {
+            if ($sitio->imagen && file_exists(public_path($sitio->imagen))) {
+                unlink(public_path($sitio->imagen)); // Borra la imagen anterior
+            }
+
             $nombreArchivo = time() . '_' . $request->file('imagen')->getClientOriginalName();
-            $request->file('imagen')->move(resource_path('img/'), $nombreArchivo);
-            $datos['imagen'] = 'resources/img/' . $nombreArchivo;
+            $request->file('imagen')->move(public_path('imagen/'), $nombreArchivo);
+            $datos['imagen'] = 'imagen/' . $nombreArchivo;
         }
 
         $sitio->update($datos);
@@ -79,7 +83,15 @@ class SitioController extends Controller
 
     public function destroy(string $id)
     {
-        Sitio::findOrFail($id)->delete();
+        $sitio = Sitio::findOrFail($id);
+
+        // Si el sitio tiene imagen, eliminarla del servidor
+        if ($sitio->imagen && file_exists(public_path($sitio->imagen))) {
+            unlink(public_path($sitio->imagen));
+        }
+
+        $sitio->delete();
         return redirect()->route('sitios.index')->with('message', 'Sitio eliminado correctamente.');
     }
+
 }
