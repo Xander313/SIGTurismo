@@ -38,9 +38,10 @@ class SitioController extends Controller
         // Subir imagen
         if ($request->hasFile('imagen')) {
             $nombreArchivo = time() . '_' . $request->file('imagen')->getClientOriginalName();
-            $request->file('imagen')->move(resource_path('img/'), $nombreArchivo);
-            $datos['imagen'] = 'resources/img/' . $nombreArchivo;
+            $request->file('imagen')->move(public_path('imagen/'), $nombreArchivo);
+            $datos['imagen'] = 'imagen/' . $nombreArchivo; // Ruta relativa a public
         }
+
 
         Sitio::create($datos);
         return redirect()->route('sitios.index')->with('message', 'Sitio creado correctamente.');
