@@ -58,6 +58,10 @@
   <link rel="stylesheet" href="{{ asset('vendors/flat-icon/font/flaticon.css') }}">
   <link rel="stylesheet" href="{{ asset('vendors/nice-select/nice-select.css') }}">
 
+  <!-- Glightbox -->
+  <link href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" rel="stylesheet">
+
+
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body class="bg-shape">
@@ -78,7 +82,7 @@
             <ul class="nav navbar-nav menu_nav justify-content-end">
               <li class="nav-item active"><a class="nav-link" href="{{ route('sitios.index') }}">Home</a></li> 
               <li class="nav-item"><a class="nav-link" href="{{ route('sitios.mapa') }}">Mapa</a></li> 
-              <li class="nav-item"><a class="nav-link" href="#">Packages</a>
+              <li class="nav-item"><a class="nav-link" href="{{ route('sitios.galeria') }}">Galería</a></li>
               <li class="nav-item submenu dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                   aria-expanded="false">Pages</a>
@@ -251,6 +255,17 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       });
   </script>
   @endif
+
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+  <script>
+      const lightbox = GLightbox({
+          selector: '.glightbox',
+          touchNavigation: true,
+          loop: true,
+          zoomable: true
+      });
+  </script>
+
 
 
 </body>

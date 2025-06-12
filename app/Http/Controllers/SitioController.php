@@ -22,7 +22,11 @@ class SitioController extends Controller
 
         return view('Sitios.mapa', compact('sitios'));
     }
-
+    public function galeria()
+    {
+        $sitios = Sitio::whereNotNull('imagen')->take(5)->get(); // Solo 5 sitios con imagen
+        return view('Sitios.galeria', compact('sitios'));
+    }
 
     public function create()
     {

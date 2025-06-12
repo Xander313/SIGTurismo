@@ -8,5 +8,6 @@ Route::get('/', function () {
 });
 
 Route::get('/sitios/mapa', [SitioController::class, 'mapa'])->name('sitios.mapa');
+Route::get('/sitios/galeria', [SitioController::class, 'galeria'])->name('sitios.galeria');
 
 Route::resource('sitios', SitioController::class);
