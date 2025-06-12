@@ -8,10 +8,13 @@
     <div class="card p-4 shadow" style="width: 70%;">
         <form action="{{ route('sitios.store') }}" id="FormRegistro" method="post" enctype="multipart/form-data" style="display:flex; flex-direction:column; gap:10px;">
             @csrf
+
             <label><b>Nombre:</b></label>
             <input type="text" name="nombre" id="nombre" class="form-control" required>
+
             <label><b>Descripción:</b></label>
             <textarea name="descripcion" id="descripcion" class="form-control"></textarea>
+
             <label><b>Categoría:</b></label>
             <select name="categoria" id="categoria" class="form-control">
                 <option value="cultural" selected>Cultural</option>
@@ -21,13 +24,22 @@
                 <option value="gastronomico">Gastronómico</option>
                 <option value="aventura">Aventura</option>
             </select>
+
             <label><b>Imagen:</b></label>
             <input type="file" name="imagen" id="imagen" class="form-control"> 
+
             <div class="elementosGeoespaciales">
                 <label><b>Referencia Geoespacial:</b></label>
+
                 <div id="mapa_cliente" class="mapa mt-3" style="border:1px solid black; height:350px;"></div>
+
                 <br>
+
                 <button type="button" class="btn btn-info" id="toggleButton" onclick="alternarCoordenadas()">Ver coordenadas</button>
+
+                <div id="errorCoordenadas" class="text-danger mt-2 text-center" style="display:none;">
+                    No ha seleccionado la coordenada en el mapa.
+                </div>
 
                 <div class="inputs">
                     <label><b>Latitud:</b></label>
@@ -38,8 +50,8 @@
                 </div>
             </div>
 
-
             <br>
+
             <div class="text-center">
                 <a href="{{ route('sitios.index') }}" class="btn btn-outline-danger">
                     <i class="fa fa-times"></i> Cancelar
@@ -53,7 +65,6 @@
     </div>
 </div>
 
-
 <style>
 .elementosGeoespaciales {
     display: flex;
@@ -66,148 +77,217 @@
     width: 100%;
     height: 250px;
     border: 1px solid black;
+    transition: all 0.4s ease-in-out;
 }
 
 .inputs {
     display: none;
     width: 100%;
     text-align: center;
-}
-.mapa, .inputs {
-    transition: all 0.4s ease-in-out; /* Suaviza el cambio de tamaño */
+    transition: all 0.4s ease-in-out;
 }
 
+#errorCoordenadas {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    min-height: 24px;
+    color: #dc3545;
+    display: none;
+}
+
+/* Estilo cuando los inputs están visibles */
+.elementosGeoespaciales.mostrar-coordenadas {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.elementosGeoespaciales.mostrar-coordenadas .mapa {
+    width: 50%;
+}
+
+.elementosGeoespaciales.mostrar-coordenadas .inputs {
+    display: block;
+    width: 48%;
+}
 </style>
 
-
 <script>
-function alternarCoordenadas() {
-    const mapa = document.querySelector(".mapa");
-    const inputs = document.querySelector(".inputs");
+function alternarCoordenadas(mostrar = null) {
     const contenedor = document.querySelector(".elementosGeoespaciales");
     const boton = document.getElementById("toggleButton");
+    const errorMsg = document.getElementById("errorCoordenadas");
 
-    if (inputs.style.display === "none" || inputs.style.display === "") {
-        // Mostrar coordenadas y ajustar diseño
-        inputs.style.display = "block";
-        inputs.style.width = "50%";
-        mapa.style.width = "50%";
-        boton.textContent = "Ocultar coordenadas";
-        
-        contenedor.style.display = "flex";
-        contenedor.style.flexDirection = "row";
-        contenedor.style.justifyContent = "space-between";
-    } else {
-        // Ocultar coordenadas y restaurar diseño original
-        inputs.style.display = "none";
-        mapa.style.width = "100%";
+    // Si se pasa un parámetro mostrar, forzar ese estado
+    if (mostrar !== null) {
+        if (mostrar) {
+            contenedor.classList.add("mostrar-coordenadas");
+            boton.textContent = "Ocultar coordenadas";
+            errorMsg.style.display = "none";
+        } else {
+            contenedor.classList.remove("mostrar-coordenadas");
+            boton.textContent = "Ver coordenadas";
+        }
+        return;
+    }
+
+    // Comportamiento normal de alternar
+    if (contenedor.classList.contains("mostrar-coordenadas")) {
+        contenedor.classList.remove("mostrar-coordenadas");
         boton.textContent = "Ver coordenadas";
-        
-        contenedor.style.display = "flex";
-        contenedor.style.flexDirection = "column";
-        contenedor.style.alignItems = "center";
+    } else {
+        contenedor.classList.add("mostrar-coordenadas");
+        boton.textContent = "Ocultar coordenadas";
+        errorMsg.style.display = "none";
+    }
+}
+</script>
+
+<script>
+function initMap() {
+    var latitud = -0.9374805;
+    var longitud = -78.6161327;
+
+    var latlng = new google.maps.LatLng(latitud, longitud);
+    var mapa = new google.maps.Map(document.getElementById('mapa_cliente'), {
+        center: latlng,
+        zoom: 6,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var marcador = new google.maps.Marker({
+        position: latlng,
+        map: mapa,
+        title: "Haga clic para seleccionar una ubicación",
+        draggable: true
+    });
+
+    mapa.addListener('click', function(event) {
+        marcador.setPosition(event.latLng);
+        actualizarCoordenadas(event.latLng.lat(), event.latLng.lng());
+    });
+
+    marcador.addListener('dragend', function(event) {
+        actualizarCoordenadas(event.latLng.lat(), event.latLng.lng());
+    });
+
+    function actualizarCoordenadas(lat, lng) {
+        document.getElementById("latitud").value = lat;
+        document.getElementById("longitud").value = lng;
+        document.getElementById("errorCoordenadas").style.display = "none";
     }
 }
 
-
-
-</script>
-
-
-
-<script type="text/javascript">
-    function initMap() {
-        var latitud = -0.9374805;
-        var longitud = -78.6161327;
-
-        var latitud_longitud = new google.maps.LatLng(latitud, longitud);
-        var mapa = new google.maps.Map(document.getElementById('mapa_cliente'), {
-            center: latitud_longitud,
-            zoom: 7,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
-
-        var marcador = new google.maps.Marker({
-            position: latitud_longitud,
-            map: mapa,
-            title: "Seleccione la dirección",
-            draggable: true
-        });
-
-        google.maps.event.addListener(marcador, 'dragend', function(event) {
-            document.getElementById("latitud").value = this.getPosition().lat();
-            document.getElementById("longitud").value = this.getPosition().lng();
-        });
-    }
-    window.onload = initMap;
+window.onload = initMap;
 </script>
 
 <script>
-    $("#imagen").fileinput({
-        language: "es",
-        allowedFileExtensions: ["png", "jpg", "jpeg"],
-        showCaption: false,
-        dropZoneEnabled: true,
-        showClose: false
-    });
+$("#imagen").fileinput({
+    language: "es",
+    allowedFileExtensions: ["png", "jpg", "jpeg"],
+    showCaption: false,
+    dropZoneEnabled: true,
+    showClose: false
+});
 </script>
 
-
 <script>
-    $("#FormRegistro").validate({
-        rules: {
-            nombre: {
-                required: true,
-                minlength: 2,
-                maxlength: 100
-            },
-            descripcion: {
-                required: true,
-                minlength: 10,
-                maxlength: 1000
-            },
-            categoria: {
-                required: true
-            },
-            imagen: {
-                required: true,
-                extension: "jpg|jpeg|png|gif"
-            }
+$.validator.setDefaults({
+    ignore: []
+});
+
+$("#FormRegistro").validate({
+    rules: {
+        nombre: {
+            required: true,
+            minlength: 2,
+            maxlength: 100
         },
-        messages: {
-            nombre: {
-                required: "El nombre del sitio turístico es requerido",
-                minlength: "El nombre del sitio turístico no puede tener menos de 2 letras",
-                maxlength: "El nombre del sitio turístico no puede tener más de 100 letras"
-            },
-            descripcion: {
-                required: "La descripción del sitio turístico es requerida",
-                minlength: "La descripción del sitio turístico no puede tener menos de 10 letras",
-                maxlength: "La descripción del sitio turístico no puede tener más de 1000 letras"
-            },
-            categoria: {
-                required: "La categoría del sitio turístico es requerida"
-            },
-            imagen: {
-                required: "Debe subir una imagen del sitio turístico",
-                extension: "Solo se permiten imágenes en formato jpg, jpeg, png, gif"
-            }
+        descripcion: {
+            required: true,
+            minlength: 10,
+            maxlength: 1000
         },
-        submitHandler: function(form) {
+        categoria: {
+            required: true
+        },
+        imagen: {
+            required: true,
+            extension: "jpg|jpeg|png|gif"
+        },
+        latitud: {
+            required: true
+        },
+        longitud: {
+            required: true
+        }
+    },
+    messages: {
+        nombre: {
+            required: "El nombre del sitio turístico es requerido",
+            minlength: "Debe tener al menos 2 caracteres",
+            maxlength: "Máximo 100 caracteres"
+        },
+        descripcion: {
+            required: "La descripción es requerida",
+            minlength: "Debe tener al menos 10 caracteres",
+            maxlength: "Máximo 1000 caracteres"
+        },
+        categoria: {
+            required: "La categoría es requerida"
+        },
+        imagen: {
+            required: "Debe subir una imagen",
+            extension: "Formato permitido: jpg, jpeg, png, gif"
+        },
+        latitud: {
+            required: "Debe seleccionar una latitud"
+        },
+        longitud: {
+            required: "Debe seleccionar una longitud"
+        }
+    },
+    submitHandler: function(form) {
+        const lat = $("#latitud").val();
+        const lng = $("#longitud").val();
+
+        if (!lat || !lng) {
+            // Mostrar los inputs si están ocultos
+            alternarCoordenadas(true);
+            
+            $("#errorCoordenadas").css("display", "block");
+
+            $('html, body').animate({
+                scrollTop: $("#errorCoordenadas").offset().top - 50
+            }, 500);
+
+            return false;
+        } else {
+            $("#errorCoordenadas").css("display", "none");
             form.submit();
         }
-
-    });
-
+    },
+    invalidHandler: function(event, validator) {
+        // Verificar si los errores son de latitud/longitud
+        const errors = validator.numberOfInvalids();
+        if (errors && (validator.invalid.latitud || validator.invalid.longitud)) {
+            alternarCoordenadas(true);
+            
+            $('html, body').animate({
+                scrollTop: $(".elementosGeoespaciales").offset().top - 50
+            }, 500);
+        }
+    }
+});
 </script>
 
-<SCript>
-    $("#categoria").rules("add", {
-        required: true,
-        messages: {
-            required: "Selecciona una opción antes de enviar"
-        }
-    });
-</SCript>
+<script>
+$("#categoria").rules("add", {
+    required: true,
+    messages: {
+        required: "Selecciona una opción antes de enviar"
+    }
+});
+</script>
 
 @endsection
