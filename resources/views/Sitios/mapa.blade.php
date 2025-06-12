@@ -14,7 +14,7 @@
         <a href="#" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalBusqueda">
             <i class="fa fa-search"></i> Volver a utilizar Filtro avanzado del mapa
         </a>
-        <a href="{{ route('sitios.index') }}" class="btn btn-outline-secondary">
+        <a href="{{ route('sitios.index', ['from' => 'mapa']) }}" class="btn btn-outline-secondary">
             <i class="fa fa-arrow-left"></i> Volver al administrador
         </a>
     </div>

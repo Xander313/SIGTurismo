@@ -11,7 +11,6 @@ class Sitio extends Model
 
     protected $fillable = ['nombre', 'descripcion', 'categoria', 'imagen', 'latitud', 'longitud'];
 
-    // Obtener la URL de la imagen
     public function getImagenUrlAttribute()
     {
         return $this->imagen ? asset($this->imagen) : asset('img/default.png');

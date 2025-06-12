@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("nombre");
             $table->text("descripcion")->nullable();
             $table->string("categoria");
-            $table->string("imagen")->nullable(); // Guardar ruta en resources/img/
+            $table->string("imagen")->nullable();
             $table->decimal("latitud", 10, 7);
             $table->decimal("longitud", 10, 7);
             $table->timestamps();

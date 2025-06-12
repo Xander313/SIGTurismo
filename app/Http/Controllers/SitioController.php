@@ -7,12 +7,16 @@ use App\Models\Sitio;
 
 class SitioController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        session()->forget(['success', 'error']); 
+        if ($request->query('from') === 'mapa') {
+            session()->forget(['success', 'error']);
+        }
+
         $sitios = Sitio::all();
         return view('Sitios.index', compact('sitios'));
     }
+
 
 
     public function mapa(Request $request)
@@ -72,11 +76,10 @@ class SitioController extends Controller
             'longitud' => 'required|numeric',
         ]);
 
-        // Subir imagen
         if ($request->hasFile('imagen')) {
             $nombreArchivo = time() . '_' . $request->file('imagen')->getClientOriginalName();
             $request->file('imagen')->move(public_path('imagen/'), $nombreArchivo);
-            $datos['imagen'] = 'imagen/' . $nombreArchivo; // Ruta relativa a public
+            $datos['imagen'] = 'imagen/' . $nombreArchivo;
         }
 
 
@@ -103,10 +106,9 @@ class SitioController extends Controller
             'longitud' => 'required|numeric',
         ]);
 
-        // Si se sube una nueva imagen, eliminar la anterior y guardar la nueva
         if ($request->hasFile('imagen')) {
             if ($sitio->imagen && file_exists(public_path($sitio->imagen))) {
-                unlink(public_path($sitio->imagen)); // Borra la imagen anterior
+                unlink(public_path($sitio->imagen));
             }
 
             $nombreArchivo = time() . '_' . $request->file('imagen')->getClientOriginalName();
@@ -122,7 +124,6 @@ class SitioController extends Controller
     {
         $sitio = Sitio::findOrFail($id);
 
-        // Si el sitio tiene imagen, eliminarla del servidor
         if ($sitio->imagen && file_exists(public_path($sitio->imagen))) {
             unlink(public_path($sitio->imagen));
         }
