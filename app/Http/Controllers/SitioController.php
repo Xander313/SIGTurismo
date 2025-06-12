@@ -9,9 +9,11 @@ class SitioController extends Controller
 {
     public function index()
     {
+        session()->forget(['success', 'error']); 
         $sitios = Sitio::all();
         return view('Sitios.index', compact('sitios'));
     }
+
 
     public function mapa(Request $request)
     {
@@ -27,9 +29,9 @@ class SitioController extends Controller
         }
 
         if ($sitios->isEmpty()) {
-            session()->flash('error', 'No se encontraron sitios con la búsqueda seleccionada.');
+            session()->flash('error', strip_tags('No se encontraron sitios con la búsqueda seleccionada.'));
         } else {
-            session()->flash('success', 'Sitios encontrados correctamente.');
+            session()->flash('success', strip_tags('Sitios encontrados correctamente.'));
         }
 
         return view('Sitios.mapa', compact('sitios', 'valorBusqueda', 'tipoBusqueda'));
