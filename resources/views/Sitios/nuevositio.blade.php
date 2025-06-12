@@ -45,7 +45,7 @@
         var latitud_longitud = new google.maps.LatLng(latitud, longitud);
         var mapa = new google.maps.Map(document.getElementById('mapa_cliente'), {
             center: latitud_longitud,
-            zoom: 15,
+            zoom: 7,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 

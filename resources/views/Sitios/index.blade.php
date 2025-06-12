@@ -19,7 +19,7 @@
         </a>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="{{ route('sitios.mapa') }}" class="btn btn-outline-success">
-            <i class="fa fa-map"></i> Ver Mapa Global
+            <i class="fa fa-globe"></i> Ver Mapa Global
         </a>
     </div>
 
