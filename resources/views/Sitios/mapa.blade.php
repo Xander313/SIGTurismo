@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('contenido')
+@section('content')
 
 <br>
 <h1>Mapa de Sitios Turísticos</h1>

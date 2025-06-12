@@ -16,7 +16,7 @@ class SitioController extends Controller
     public function mapa()
     {
         $sitios = Sitio::all();
-        return view('sitios.mapa', compact('sitios'));
+        return view('Sitios.mapa', compact('sitios'));
     }
 
     public function create()
