@@ -25,7 +25,7 @@
             <input type="file" name="imagen" id="imagen" class="form-control"> 
             <div class="elementosGeoespaciales">
                 <label><b>Referencia Geoespacial:</b></label>
-                <div id="mapa_cliente" class="mapa mt-3"></div>
+                <div id="mapa_cliente" class="mapa mt-3" style="border:1px solid black; height:350px;"></div>
                 <br>
                 <button type="button" class="btn btn-info" id="toggleButton" onclick="alternarCoordenadas()">Ver coordenadas</button>
 
@@ -41,7 +41,13 @@
 
             <br>
             <div class="text-center">
-                <button type="submit" class="btn btn-success">Guardar</button>
+                <button type="submit" class="btn btn-outline-success">
+                    <i class="fa fa-save"></i> Guardar
+                </button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{{ route('sitios.index') }}" class="btn btn-outline-danger">
+                    <i class="fa fa-times"></i> Cancelar
+                </a>
             </div>
         </form>
     </div>
