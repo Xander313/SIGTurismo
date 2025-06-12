@@ -17,7 +17,6 @@
         <a href="{{ route('sitios.create') }}" class="btn btn-outline-primary">
             <i class="fa fa-plus"></i> Nuevo Sitio
         </a>
-        &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="#" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalBusqueda">
             <i class="fa fa-globe"></i> Filtro avanzado del mapa
         </a>
@@ -34,10 +33,18 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="formBusqueda">
-                        <label for="buscar">Sitio a buscar:</label>
-                        <input type="text" id="buscar" name="buscar" class="form-control">
-                        <br>
+                    <form id="formBusqueda" style="display:flex; flex-direction:column; gap:10px;">
+                        <label for="buscar">Sitio a buscar por categoria:</label>
+
+                        <select name="categoria" id="categoria" class="form-control">
+                            <option value="cultural" selected>Cultural</option>
+                            <option value="natural">Natural</option>
+                            <option value="historico">Histórico</option>
+                            <option value="arquitectonico">Arquitectónico</option>
+                            <option value="gastronomico">Gastronómico</option>
+                            <option value="aventura">Aventura</option>
+                        </select>                        
+                        
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Buscar sitios</button>
                         </div>
@@ -46,7 +53,22 @@
             </div>
         </div>
     </div>
+<script>
+document.getElementById("formBusqueda").addEventListener("submit", function(event) {
+    event.preventDefault();
 
+    let query = document.getElementById("categoria").value;
+
+    if (!query) {
+        alert("Por favor, selecciona una categoría válida.");
+        return;
+    }
+
+    window.location.href = `/sitios/mapa?buscar=${encodeURIComponent(query)}`;
+});
+
+
+</script>
 
 
 
@@ -120,22 +142,7 @@
 </script>
 
 
-<script>
-    document.getElementById("formBusqueda").addEventListener("submit", function(event) {
-    event.preventDefault(); // Evita que el formulario se envíe normalmente
 
-    let query = document.getElementById("buscar").value.trim(); // Obtener la búsqueda
-
-    if (query === "") {
-        alert("Por favor, ingresa un sitio para buscar.");
-        return;
-    }
-
-    // Redirigir a la URL de búsqueda en mapas
-    window.location.href = `/mapas?buscar=${encodeURIComponent(query)}`;
-});
-
-</script>
 
 
 <script>

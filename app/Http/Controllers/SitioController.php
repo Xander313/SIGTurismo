@@ -13,11 +13,16 @@ class SitioController extends Controller
         return view('Sitios.index', compact('sitios'));
     }
 
-    public function mapa()
+    public function mapa(Request $request)
     {
-        $sitios = Sitio::all();
+        $categoria = $request->input('buscar'); // Capturar el parámetro de búsqueda
+
+        // Filtrar solo los sitios que coincidan con la categoría buscada
+        $sitios = Sitio::where('categoria', $categoria)->get();
+
         return view('Sitios.mapa', compact('sitios'));
     }
+
 
     public function create()
     {
