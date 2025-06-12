@@ -144,41 +144,41 @@ function alternarCoordenadas(mostrar = null) {
 </script>
 
 <script>
-function initMap() {
-    var latitud = -0.9374805;
-    var longitud = -78.6161327;
+    function initMap() {
+        var latitud = -0.9374805;
+        var longitud = -78.6161327;
 
-    var latlng = new google.maps.LatLng(latitud, longitud);
-    var mapa = new google.maps.Map(document.getElementById('mapa_cliente'), {
-        center: latlng,
-        zoom: 6,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
+        var latlng = new google.maps.LatLng(latitud, longitud);
+        var mapa = new google.maps.Map(document.getElementById('mapa_cliente'), {
+            center: latlng,
+            zoom: 6,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
 
-    var marcador = new google.maps.Marker({
-        position: latlng,
-        map: mapa,
-        title: "Haga clic para seleccionar una ubicación",
-        draggable: true
-    });
+        var marcador = new google.maps.Marker({
+            position: latlng,
+            map: mapa,
+            title: "Haga clic para seleccionar una ubicación",
+            draggable: true
+        });
 
-    mapa.addListener('click', function(event) {
-        marcador.setPosition(event.latLng);
-        actualizarCoordenadas(event.latLng.lat(), event.latLng.lng());
-    });
+        mapa.addListener('click', function(event) {
+            marcador.setPosition(event.latLng);
+            actualizarCoordenadas(event.latLng.lat(), event.latLng.lng());
+        });
 
-    marcador.addListener('dragend', function(event) {
-        actualizarCoordenadas(event.latLng.lat(), event.latLng.lng());
-    });
+        marcador.addListener('dragend', function(event) {
+            actualizarCoordenadas(event.latLng.lat(), event.latLng.lng());
+        });
 
-    function actualizarCoordenadas(lat, lng) {
-        document.getElementById("latitud").value = lat;
-        document.getElementById("longitud").value = lng;
-        document.getElementById("errorCoordenadas").style.display = "none";
+        function actualizarCoordenadas(lat, lng) {
+            document.getElementById("latitud").value = lat;
+            document.getElementById("longitud").value = lng;
+            document.getElementById("errorCoordenadas").style.display = "none";
+        }
     }
-}
 
-window.onload = initMap;
+    window.onload = initMap;
 </script>
 
 <script>

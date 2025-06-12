@@ -4,6 +4,9 @@
     <h1 class="mb-4">Listado de Sitios Turísticos</h1>
 
     <div class="text-end mb-3">
+        <a href="{{ route('sitios.maparapido') }}" class="btn btn-outline-warning me-2">
+            <i class="fa fa-bolt"></i> Mapa Rápido
+        </a>
         <a href="{{ route('sitios.create') }}" class="btn btn-outline-primary">
             <i class="fa fa-plus"></i> Nuevo Sitio
         </a>

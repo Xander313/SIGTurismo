@@ -37,6 +37,11 @@ class SitioController extends Controller
         return view('Sitios.mapa', compact('sitios', 'valorBusqueda', 'tipoBusqueda'));
     }
 
+    public function maparapido()
+    {
+        $sitios = Sitio::all(); 
+        return view('Sitios.maparapido', compact('sitios'));
+    }
 
     public function galeria()
     {
