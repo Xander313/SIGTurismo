@@ -49,13 +49,13 @@
 
             <br>
             <div class="text-center">
-                <button type="submit" class="btn btn-outline-success">
-                    <i class="fa fa-save"></i> Guardar Cambios
-                </button>
-                &nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="{{ route('sitios.index') }}" class="btn btn-outline-danger">
                     <i class="fa fa-times"></i> Cancelar
                 </a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="submit" class="btn btn-outline-success">
+                    <i class="fa fa-save"></i> Guardar Cambios
+                </button>
             </div>
         </form>
     </div>
@@ -211,13 +211,6 @@ function alternarCoordenadas() {
                 minlength: 10,
                 maxlength: 1000
             },
-            categoria: {
-                required: true
-            },
-            imagen: {
-                required: true,
-                extension: "jpg|jpeg|png|gif"
-            }
         },
         messages: {
             nombre: {
@@ -230,13 +223,6 @@ function alternarCoordenadas() {
                 minlength: "La descripción del sitio turístico no puede tener menos de 10 letras",
                 maxlength: "La descripción del sitio turístico no puede tener más de 1000 letras"
             },
-            categoria: {
-                required: "La categoría del sitio turístico es requerida"
-            },
-            imagen: {
-                required: "Debe subir una imagen del sitio turístico",
-                extension: "Solo se permiten imágenes en formato jpg, jpeg, png, gif"
-            }
         },
         submitHandler: function(form) {
             form.submit();

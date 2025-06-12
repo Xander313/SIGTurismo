@@ -18,7 +18,7 @@
             <i class="fa fa-plus"></i> Nuevo Sitio
         </a>
         <a href="#" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalBusqueda">
-            <i class="fa fa-globe"></i> Filtro avanzado del mapa
+            <i class="fa fa-search"></i> Filtro avanzado del mapa
         </a>
     </div>
 

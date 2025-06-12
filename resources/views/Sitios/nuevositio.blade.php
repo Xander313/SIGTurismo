@@ -41,13 +41,13 @@
 
             <br>
             <div class="text-center">
-                <button type="submit" class="btn btn-outline-success">
-                    <i class="fa fa-save"></i> Guardar
-                </button>
-                &nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="{{ route('sitios.index') }}" class="btn btn-outline-danger">
                     <i class="fa fa-times"></i> Cancelar
                 </a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="submit" class="btn btn-outline-success">
+                    <i class="fa fa-save"></i> Guardar
+                </button>
             </div>
         </form>
     </div>

@@ -5,6 +5,12 @@
 <br>
 <h1>Mapa de Sitios Turísticos</h1>
 <br>
+    <div class="text-center">
+        <a href="#" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalBusqueda">
+            <i class="fa fa-search"></i> Volver a ultilizar Filtro avanzado del mapa
+        </a>
+    </div>
+    <br>
 <div id="mapa-sitios" style="border:2px solid black; height:500px; width:100%;"></div>
 
 <br>
@@ -12,18 +18,15 @@
     <a href="{{ route('sitios.index') }}" class="btn btn-outline-secondary">
         <i class="fa fa-arrow-left"></i> Volver
     </a>
+    <br> <br>
 </div>
 
 
-    <div class="text-center">
-        <a href="#" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalBusqueda">
-            <i class="fa fa-globe"></i> Volver a ultilizar Filtro avanzado del mapa
-        </a>
-    </div>
 
 
 
-    <!-- Modal -->
+
+    
     <div class="modal fade" id="modalBusqueda" tabindex="-1" aria-labelledby="modalBusquedaLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -71,42 +74,48 @@ document.getElementById("formBusqueda").addEventListener("submit", function(even
 
 
 <script type="text/javascript">
-    function initMap() {
-        var latitud = -0.9374805;
-        var longitud = -78.6161327;
+    let mapa;
 
-        var latitud_longitud = new google.maps.LatLng(latitud, longitud);
-        var mapa = new google.maps.Map(document.getElementById('mapa-sitios'), {
-            center: latitud_longitud,
+    function initMap() {
+        var centro = { lat: -0.9374805, lng: -78.6161327 };
+
+        mapa = new google.maps.Map(document.getElementById('mapa-sitios'), {
+            center: centro,
             zoom: 7,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
-        var sitios = @json($sitios); // Convertir datos PHP a JSON para JavaScript
+        var sitios = @json($sitios); 
 
         sitios.forEach(sitio => {
-            var coordenadasSitio = new google.maps.LatLng(sitio.latitud, sitio.longitud);
+            var posicion = { lat: parseFloat(sitio.latitud), lng: parseFloat(sitio.longitud) };
+            var imagenUrl = sitio.imagen ? `/${sitio.imagen}` : '/imagen/default.png';
+
+            
             var marcador = new google.maps.Marker({
-                position: coordenadasSitio,
+                position: posicion,
                 map: mapa,
                 icon: {
-                    url: 'https://static.vecteezy.com/system/resources/previews/059/918/232/non_2x/vibrant-minimalist-three-quarter-portrait-angled-portrait-exclusive-free-png.png',
-                    scaledSize: new google.maps.Size(40, 40)
+                    url: imagenUrl,
+                    scaledSize: new google.maps.Size(35, 35)
                 },
-                title: sitio.nombre,
-                draggable: false
+                title: sitio.nombre
             });
 
+            
             var infoWindow = new google.maps.InfoWindow({
-                content: `<strong>${sitio.nombre}</strong><br>${sitio.descripcion}`
+                content: `
+                    <strong>${sitio.nombre}</strong><br>
+                    ${sitio.descripcion}<br>
+                    <img src="${imagenUrl}" width="100" height="100">
+                `
             });
 
-            marcador.addListener("click", () => {
+            marcador.addListener("click", function () {
                 infoWindow.open(mapa, marcador);
             });
         });
     }
-    window.onload = initMap;
 </script>
 
 @endsection
