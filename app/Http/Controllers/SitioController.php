@@ -15,17 +15,26 @@ class SitioController extends Controller
 
     public function mapa(Request $request)
     {
-        $categoria = $request->input('buscar'); 
-        $sitios = Sitio::where('categoria', $categoria)->get();
+        $valorBusqueda = $request->input('buscar'); 
+        $tipoBusqueda = $request->input('tipoBusqueda');
+
+        if ($tipoBusqueda === "categoria") {
+            $sitios = Sitio::where('categoria', $valorBusqueda)->get();
+        } elseif ($tipoBusqueda === "nombre") {
+            $sitios = Sitio::where('nombre', 'LIKE', "%{$valorBusqueda}%")->get(); 
+        } else {
+            $sitios = collect(); 
+        }
 
         if ($sitios->isEmpty()) {
-            session()->flash('error', 'No se encontraron sitios en esta categoría.');
+            session()->flash('error', 'No se encontraron sitios con la búsqueda seleccionada.');
         } else {
             session()->flash('success', 'Sitios encontrados correctamente.');
         }
 
-        return view('Sitios.mapa', compact('sitios', 'categoria'));
+        return view('Sitios.mapa', compact('sitios', 'valorBusqueda', 'tipoBusqueda'));
     }
+
 
     public function galeria()
     {
