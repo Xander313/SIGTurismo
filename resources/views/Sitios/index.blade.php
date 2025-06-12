@@ -18,10 +18,37 @@
             <i class="fa fa-plus"></i> Nuevo Sitio
         </a>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="{{ route('sitios.mapa') }}" class="btn btn-outline-success">
-            <i class="fa fa-globe"></i> Ver Mapa Global
+        <a href="#" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalBusqueda">
+            <i class="fa fa-globe"></i> Filtro avanzado del mapa
         </a>
     </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalBusqueda" tabindex="-1" aria-labelledby="modalBusquedaLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalBusquedaLabel">Buscar Sitios Turísticos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formBusqueda">
+                        <label for="buscar">Sitio a buscar:</label>
+                        <input type="text" id="buscar" name="buscar" class="form-control">
+                        <br>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Buscar sitios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
     <div class="table-responsive">
         <table class="table table-striped table-bordered align-middle" id="tableSitios">
@@ -91,6 +118,25 @@
     });
 
 </script>
+
+
+<script>
+    document.getElementById("formBusqueda").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evita que el formulario se envíe normalmente
+
+    let query = document.getElementById("buscar").value.trim(); // Obtener la búsqueda
+
+    if (query === "") {
+        alert("Por favor, ingresa un sitio para buscar.");
+        return;
+    }
+
+    // Redirigir a la URL de búsqueda en mapas
+    window.location.href = `/mapas?buscar=${encodeURIComponent(query)}`;
+});
+
+</script>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
