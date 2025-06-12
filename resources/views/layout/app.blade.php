@@ -76,14 +76,14 @@
 
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav justify-content-end">
-              <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li> 
-              <li class="nav-item"><a class="nav-link" href="about.html">About</a></li> 
-              <li class="nav-item"><a class="nav-link" href="package.html">Packages</a>
+              <li class="nav-item active"><a class="nav-link" href="{{ route('sitios.index') }}">Home</a></li> 
+              <li class="nav-item"><a class="nav-link" href="{{ route('sitios.mapa') }}">Mapa</a></li> 
+              <li class="nav-item"><a class="nav-link" href="#">Packages</a>
               <li class="nav-item submenu dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                   aria-expanded="false">Pages</a>
                 <ul class="dropdown-menu">
-                  <li class="nav-item"><a class="nav-link" href="amentities.html">Amentities</a>                 
+                  <li class="nav-item"><a class="nav-link" href="#">Amentities</a>                 
                 </ul>
 							</li>
 
@@ -91,11 +91,11 @@
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                   aria-expanded="false">Blog</a>
                 <ul class="dropdown-menu">
-                  <li class="nav-item"><a class="nav-link" href="blog.html">Blog Single</a></li>
-                  <li class="nav-item"><a class="nav-link" href="blog-details.html">Blog Details</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#">Blog Single</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#">Blog Details</a></li>
                 </ul>
 							</li>
-              <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
             </ul>
 
             <div class="nav-right text-center text-lg-right py-4 py-lg-0">
