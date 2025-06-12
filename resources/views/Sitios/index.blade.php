@@ -3,16 +3,6 @@
 <div class="container mt-4">
     <h1 class="mb-4">Listado de Sitios Turísticos</h1>
 
-    @if(session('message'))
-        <script>
-            Swal.fire({
-                title: "CONFIRMACIÓN",
-                text: "{{ session('message') }}",
-                icon: "success",
-            });
-        </script>
-    @endif
-
     <div class="text-end mb-3">
         <a href="{{ route('sitios.create') }}" class="btn btn-outline-primary">
             <i class="fa fa-plus"></i> Nuevo Sitio
@@ -132,8 +122,9 @@ document.getElementById("formBusqueda").addEventListener("submit", function(even
             buttons: [
                 'copy',
                 'csv',
-                'excel',
-                'pdf',
+                'e                            <a href="#" class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-link-45deg"></i>
+                            </a>df',
                 'print'
             ]
         });

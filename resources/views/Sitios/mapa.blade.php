@@ -2,29 +2,21 @@
 
 @section('content')
 
-<br>
-<h1>Mapa de Sitios Turísticos</h1>
-<br>
-    <div class="text-center">
+
+
+<div style="display:flex; width:100%; height:auto; flex-direction:column; justify-content:center; gap:15px; padding:15px;">
+    <h1 style="font-size:1.5rem;">Mapa de Sitios Turísticos para la categoría: {{$categoria}}</h1>
+    <div style="display:flex; width:100%; justify-content:right; gap:15px; padding:15px;">
         <a href="#" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalBusqueda">
-            <i class="fa fa-search"></i> Volver a ultilizar Filtro avanzado del mapa
+            <i class="fa fa-search"></i> Volver a utilizar Filtro avanzado del mapa
+        </a>
+        <a href="{{ route('sitios.index') }}" class="btn btn-outline-secondary">
+            <i class="fa fa-arrow-left"></i> Volver al administrador
         </a>
     </div>
-    <br>
-<div id="mapa-sitios" style="border:2px solid black; height:500px; width:100%;"></div>
 
-<br>
-<div class="text-center">
-    <a href="{{ route('sitios.index') }}" class="btn btn-outline-secondary">
-        <i class="fa fa-arrow-left"></i> Volver
-    </a>
-    <br> <br>
+    <div id="mapa-sitios" style="border:2px solid black; height:500px; width:100%; box-shadow: 0 0 10px 0 black; padding:15px;"></div>
 </div>
-
-
-
-
-
 
     
     <div class="modal fade" id="modalBusqueda" tabindex="-1" aria-labelledby="modalBusquedaLabel" aria-hidden="true">
@@ -115,7 +107,10 @@ document.getElementById("formBusqueda").addEventListener("submit", function(even
                 infoWindow.open(mapa, marcador);
             });
         });
+
     }
+    //window.onload = initMap;
+
 </script>
 
 @endsection

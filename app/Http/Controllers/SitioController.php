@@ -15,16 +15,21 @@ class SitioController extends Controller
 
     public function mapa(Request $request)
     {
-        $categoria = $request->input('buscar'); // Capturar el parámetro de búsqueda
-
-        // Filtrar solo los sitios que coincidan con la categoría buscada
+        $categoria = $request->input('buscar'); 
         $sitios = Sitio::where('categoria', $categoria)->get();
 
-        return view('Sitios.mapa', compact('sitios'));
+        if ($sitios->isEmpty()) {
+            session()->flash('error', 'No se encontraron sitios en esta categoría.');
+        } else {
+            session()->flash('success', 'Sitios encontrados correctamente.');
+        }
+
+        return view('Sitios.mapa', compact('sitios', 'categoria'));
     }
+
     public function galeria()
     {
-        $sitios = Sitio::whereNotNull('imagen')->take(5)->get(); // Solo 5 sitios con imagen
+        $sitios = Sitio::whereNotNull('imagen')->take(10)->get();
         return view('Sitios.galeria', compact('sitios'));
     }
 
@@ -53,7 +58,7 @@ class SitioController extends Controller
 
 
         Sitio::create($datos);
-        return redirect()->route('sitios.index')->with('message', 'Sitio creado correctamente.');
+        return redirect()->route('sitios.index')->with('success', 'Sitio creado correctamente.');
     }
 
     public function edit(string $id)
@@ -87,7 +92,7 @@ class SitioController extends Controller
         }
 
         $sitio->update($datos);
-        return redirect()->route('sitios.index')->with('message', 'Sitio actualizado correctamente.');
+        return redirect()->route('sitios.index')->with('success', 'Sitio actualizado correctamente.');
     }
 
     public function destroy(string $id)
@@ -100,7 +105,7 @@ class SitioController extends Controller
         }
 
         $sitio->delete();
-        return redirect()->route('sitios.index')->with('message', 'Sitio eliminado correctamente.');
+        return redirect()->route('sitios.index')->with('success', 'Sitio eliminado correctamente.');
     }
 
 }

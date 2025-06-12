@@ -15,10 +15,7 @@
                         </div>
                         <div class="card-footer bg-transparent border-0 d-flex justify-content-center gap-3 pb-3">
                             <a href="{{ asset($sitio->imagen) }}" title="{{ $sitio->nombre }}" class="btn btn-sm btn-outline-primary glightbox" data-gallery="gallery">
-                                <i class="bi bi-arrows-angle-expand"></i>
-                            </a>
-                            <a href="#" class="btn btn-sm btn-outline-secondary">
-                                <i class="bi bi-link-45deg"></i>
+                                <i class="bi bi-arrows-angle-expand">Expandir</i>
                             </a>
                         </div>
                     </div>
