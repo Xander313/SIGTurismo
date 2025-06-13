@@ -17,7 +17,7 @@
 
 
 
-    <!-- Modal -->
+    
 <div class="modal fade" id="modalBusqueda" tabindex="-1" aria-labelledby="modalBusquedaLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -69,13 +69,13 @@
     document.getElementById("btnBuscarCategoria").addEventListener("click", function() {
         document.getElementById("categoriaContainer").style.display = "block";
         document.getElementById("nombreContainer").style.display = "none";
-        document.getElementById("tipoBusqueda").value = "categoria"; // Indicamos el tipo de búsqueda
+        document.getElementById("tipoBusqueda").value = "categoria"; 
     });
 
     document.getElementById("btnBuscarNombre").addEventListener("click", function() {
         document.getElementById("categoriaContainer").style.display = "none";
         document.getElementById("nombreContainer").style.display = "block";
-        document.getElementById("tipoBusqueda").value = "nombre"; // Indicamos el tipo de búsqueda
+        document.getElementById("tipoBusqueda").value = "nombre"; 
     });
 
     document.getElementById("formBusqueda").addEventListener("submit", function(event) {
@@ -125,12 +125,12 @@
                         <td>{{ $sitio->latitud }}</td>
                         <td>{{ $sitio->longitud }}</td>
                         <td>
-                            <!-- Botón Editar (Icono de lápiz) -->
+                            
                             <a href="{{ route('sitios.edit', $sitio->id) }}" class="btn btn-outline-warning btn-sm">
                                 <i class="fa fa-pen"></i>
                             </a>
 
-                            <!-- Botón Eliminar (Icono de basurero) -->
+                            
                             <form action="{{ route('sitios.destroy', $sitio->id) }}" method="POST" style="display:inline;" class="form-eliminar">
                                 @csrf
                                 @method('DELETE')

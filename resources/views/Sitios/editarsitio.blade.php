@@ -66,7 +66,7 @@
         var latitud = parseFloat(document.getElementById("latitud").value);
         var longitud = parseFloat(document.getElementById("longitud").value);
 
-        // Coordenadas por defecto si no hay valores válidos
+        
         if (isNaN(latitud) || isNaN(longitud)) {
             latitud = -0.9374805;
             longitud = -78.6161327;
@@ -85,10 +85,10 @@
             title: "Haga clic para seleccionar una ubicación"
         });
 
-        // Evento al hacer clic en el mapa
+        
         mapa.addListener('click', function(event) {
             var coordenadas = event.latLng;
-            marcador.setPosition(coordenadas); // Mueve el marcador al lugar clickeado
+            marcador.setPosition(coordenadas); 
 
             document.getElementById("latitud").value = coordenadas.lat();
             document.getElementById("longitud").value = coordenadas.lng();
@@ -123,7 +123,7 @@
     text-align: center;
 }
 .mapa, .inputs {
-    transition: all 0.4s ease-in-out; /* Suaviza el cambio de tamaño */
+    transition: all 0.4s ease-in-out; 
 }
 
 </style>
@@ -137,7 +137,7 @@
         const boton = document.getElementById("toggleButton");
 
         if (inputs.style.display === "none" || inputs.style.display === "") {
-            // Mostrar coordenadas y ajustar diseño
+            
             inputs.style.display = "block";
             inputs.style.width = "50%";
             mapa.style.width = "50%";
@@ -147,7 +147,7 @@
             contenedor.style.flexDirection = "row";
             contenedor.style.justifyContent = "space-between";
         } else {
-            // Ocultar coordenadas y restaurar diseño original
+            
             inputs.style.display = "none";
             mapa.style.width = "100%";
             boton.textContent = "Ver coordenadas";
