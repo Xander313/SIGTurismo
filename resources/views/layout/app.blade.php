@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Safario Travel - Home</title>
-	<link rel="icon" href="img/Fevicon.png" type="image/png">
+  <title>SIG Turismo</title>
+	<link rel="icon" href="{{ asset('img/Fevicon.png') }}" type="image/png">
 
   <!-- 1. jQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -80,7 +80,7 @@
 
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav justify-content-end">
-              <li class="nav-item active"><a class="nav-link" href="{{ route('sitios.index', ['from' => 'mapa']) }}" > Inicio</a></li>                
+              <li class="nav-item active"><a class="nav-link" href="{{ route('sitios.index', ['from' => 'mapa']) }}" > Administración</a></li>                
               <li class="nav-item"><a class="nav-link" href="{{ route('sitios.galeria') }}">Galería</a></li>
 
           </div> 

@@ -9,36 +9,76 @@
 </div>
 
 <script>
+  
+  let mapa;
   let marcador;
 
+  
   function initMap() {
-    const centro = { lat: -0.9374805, lng: -78.6161327 };
-    const mapa = new google.maps.Map(document.getElementById('mapa-sitios'), {
-      center: centro,
-      zoom: 7,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
+    try {
+      
+      const centro = { lat: -0.9374805, lng: -78.6161327 };
+      
+      
+      mapa = new google.maps.Map(document.getElementById('mapa-sitios'), {
+        center: centro,
+        zoom: 7,
+        mapTypeId: 'roadmap',
+        gestureHandling: 'cooperative',
+        disableDefaultUI: false, 
+        clickableIcons: false 
+      });
 
-    mapa.addListener('click', function(e) {
-      const lat = e.latLng.lat().toFixed(6);
-      const lng = e.latLng.lng().toFixed(6);
+      
+      mapa.addListener('click', function(e) {
+        
+        if (marcador) {
+          marcador.setMap(null);
+        }
 
-      if (marcador) {
-        marcador.setPosition(e.latLng);
-      } else {
+        
         marcador = new google.maps.Marker({
           position: e.latLng,
           map: mapa,
+          animation: google.maps.Animation.DROP,
           title: "Ubicación seleccionada"
         });
-      }
 
-      setTimeout(() => {
-        window.location.href = `{{ route('sitios.nuevorapido') }}?lat=${lat}&lng=${lng}`;
-      }, 600);
-    });
+        
+        setTimeout(() => {
+          window.location.href = `{{ route('sitios.nuevorapido') }}?lat=${e.latLng.lat().toFixed(6)}&lng=${e.latLng.lng().toFixed(6)}`;
+        }, 600);
+      });
+
+      
+      google.maps.event.addListenerOnce(mapa, 'tilesloaded', function() {
+        console.log('Mapa completamente cargado');
+      });
+
+    } catch (error) {
+      console.error('Error al inicializar el mapa:', error);
+      
+    }
   }
 
-  window.initMap = initMap;
+  function checkGoogleMaps() {
+    if (window.google && window.google.maps) {
+      initMap();
+    } else {
+      
+      setTimeout(checkGoogleMaps, 200);
+    }
+  }
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    checkGoogleMaps();
+  });
+
+  
+  if (document.readyState === 'complete') {
+    checkGoogleMaps();
+  }
 </script>
+
 @endsection

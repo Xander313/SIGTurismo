@@ -145,9 +145,8 @@
                 infoWindow.open(mapa, marcador);
             });
         });
-        window.initMap = initMap;
     }
-    //window.onload = initMap;
+    window.onload = initMap;
 
 </script>
 

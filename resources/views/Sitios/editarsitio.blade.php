@@ -63,30 +63,46 @@
 
 <script type="text/javascript">
     function initMap() {
-        var latitud = parseFloat(document.getElementById("latitud").value) || -0.9374805;
-        var longitud = parseFloat(document.getElementById("longitud").value) || -78.6161327;
+        var latitud = parseFloat(document.getElementById("latitud").value);
+        var longitud = parseFloat(document.getElementById("longitud").value);
 
-        var latitud_longitud = new google.maps.LatLng(latitud, longitud);
+        // Coordenadas por defecto si no hay valores válidos
+        if (isNaN(latitud) || isNaN(longitud)) {
+            latitud = -0.9374805;
+            longitud = -78.6161327;
+        }
+
+        var latlng = new google.maps.LatLng(latitud, longitud);
         var mapa = new google.maps.Map(document.getElementById('mapa_cliente'), {
-            center: latitud_longitud,
-            zoom: 15,
+            center: latlng,
+            zoom: 7,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
         var marcador = new google.maps.Marker({
-            position: latitud_longitud,
+            position: latlng,
             map: mapa,
-            title: "Seleccione la dirección",
-            draggable: true
+            title: "Haga clic para seleccionar una ubicación"
         });
 
-        google.maps.event.addListener(marcador, 'dragend', function(event) {
-            document.getElementById("latitud").value = this.getPosition().lat();
-            document.getElementById("longitud").value = this.getPosition().lng();
+        // Evento al hacer clic en el mapa
+        mapa.addListener('click', function(event) {
+            var coordenadas = event.latLng;
+            marcador.setPosition(coordenadas); // Mueve el marcador al lugar clickeado
+
+            document.getElementById("latitud").value = coordenadas.lat();
+            document.getElementById("longitud").value = coordenadas.lng();
+
+            var error = document.getElementById("errorCoordenadas");
+            if (error) {
+                error.style.display = "none";
+            }
         });
     }
+
     window.onload = initMap;
 </script>
+
 <style>
 .elementosGeoespaciales {
     display: flex;
@@ -114,77 +130,34 @@
 
 
 <script>
-function alternarCoordenadas() {
-    const mapa = document.querySelector(".mapa");
-    const inputs = document.querySelector(".inputs");
-    const contenedor = document.querySelector(".elementosGeoespaciales");
-    const boton = document.getElementById("toggleButton");
+    function alternarCoordenadas() {
+        const mapa = document.querySelector(".mapa");
+        const inputs = document.querySelector(".inputs");
+        const contenedor = document.querySelector(".elementosGeoespaciales");
+        const boton = document.getElementById("toggleButton");
 
-    if (inputs.style.display === "none" || inputs.style.display === "") {
-        // Mostrar coordenadas y ajustar diseño
-        inputs.style.display = "block";
-        inputs.style.width = "50%";
-        mapa.style.width = "50%";
-        boton.textContent = "Ocultar coordenadas";
-        
-        contenedor.style.display = "flex";
-        contenedor.style.flexDirection = "row";
-        contenedor.style.justifyContent = "space-between";
-    } else {
-        // Ocultar coordenadas y restaurar diseño original
-        inputs.style.display = "none";
-        mapa.style.width = "100%";
-        boton.textContent = "Ver coordenadas";
-        
-        contenedor.style.display = "flex";
-        contenedor.style.flexDirection = "column";
-        contenedor.style.alignItems = "center";
-    }
-}
-
-
-
-</script>
-
-
-
-<script type="text/javascript">
-    function initMap() {
-        // Obtener la latitud y longitud del sitio
-        var latitud = parseFloat(document.getElementById("latitud").value);
-        var longitud = parseFloat(document.getElementById("longitud").value);
-
-        // Si no hay coordenadas, usa valores por defecto
-        if (isNaN(latitud) || isNaN(longitud)) {
-            latitud = -0.9374805;
-            longitud = -78.6161327;
+        if (inputs.style.display === "none" || inputs.style.display === "") {
+            // Mostrar coordenadas y ajustar diseño
+            inputs.style.display = "block";
+            inputs.style.width = "50%";
+            mapa.style.width = "50%";
+            boton.textContent = "Ocultar coordenadas";
+            
+            contenedor.style.display = "flex";
+            contenedor.style.flexDirection = "row";
+            contenedor.style.justifyContent = "space-between";
+        } else {
+            // Ocultar coordenadas y restaurar diseño original
+            inputs.style.display = "none";
+            mapa.style.width = "100%";
+            boton.textContent = "Ver coordenadas";
+            
+            contenedor.style.display = "flex";
+            contenedor.style.flexDirection = "column";
+            contenedor.style.alignItems = "center";
         }
-
-        var latitud_longitud = new google.maps.LatLng(latitud, longitud);
-        var mapa = new google.maps.Map(document.getElementById('mapa_cliente'), {
-            center: latitud_longitud,
-            zoom: 7,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
-
-        var marcador = new google.maps.Marker({
-            position: latitud_longitud,
-            map: mapa,
-            title: "Seleccione la dirección",
-            draggable: true
-        });
-
-        // Actualizar coordenadas cuando el usuario arrastre el marcador
-        google.maps.event.addListener(marcador, 'dragend', function(event) {
-            document.getElementById("latitud").value = this.getPosition().lat();
-            document.getElementById("longitud").value = this.getPosition().lng();
-        });
-
-        // Asegurar que el mapa se centre en la posición inicial
-        mapa.setCenter(marcador.getPosition());
     }
 
-    window.onload = initMap;
 </script>
 
 <script>
